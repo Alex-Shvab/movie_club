@@ -21,18 +21,20 @@ class MoviesView(GenreYear, ListView):
     """Список фильмов"""
     model = Movie
     queryset = Movie.objects.filter(draft=False)
-    paginate_by = 1
+    paginate_by = 5
 
 
 
 class MovieDetailView(GenreYear, DetailView):
     """Полное описание фильма"""
     model = Movie
+    queryset = Movie.objects.filter(draft=False)
     slug_field = "url"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["star_form"] = RatingForm()
+        context["form"] = ReviewForm()
         return context
 
 
@@ -109,3 +111,16 @@ class AddStarRating(View):
             return HttpResponse(status=201)
         else:
             return HttpResponse(status=400)
+
+
+class Search(ListView):
+    """Поиск фильма"""
+    paginate_by = 2
+
+    def get_queryset(self):
+        return Movie.objects.filter(title__icontains=self.request.GET.get("q"))
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["q"] = f'q={self.request.GET.get("q")}&'
+        return context
