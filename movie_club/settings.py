@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
 
     'ckeditor',
     'snowpenguin.django.recaptcha3',
@@ -52,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'movie_club.urls'
@@ -203,3 +206,5 @@ RECAPTCHA_PUBLIC_KEY = "6LeA56IZAAAAAC-oW8kgUZB0Y86XvqpTsbAxTLpe"
 RECAPTCHA_PRIVATE_KEY = "6LeA56IZAAAAANAZl3Dz0AyW5PRseh3SLKD45MAp"
 RECAPTCHA_DEFAULT_ACTION = 'generic'
 RECAPTCHA_SCORE_THRESHOLD = 0.5
+
+SITE_ID = 1
